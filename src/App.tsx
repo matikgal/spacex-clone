@@ -1,12 +1,14 @@
-import NavBar from './components/NavBar'
-import Starship from './components/Starship'
+import NavBar from './Pages/MainPage/NavBar'
+// import Starlink from './components/Starlink'
+import Starship from './Pages/MainPage/Starship'
 
 function App() {
 	return (
-		<>
+		<div className="font-roboto flex flex-col">
 			<NavBar />
 			<Starship />
-		</>
+			{/* <Starlink /> */}
+		</div>
 	)
 }
 
