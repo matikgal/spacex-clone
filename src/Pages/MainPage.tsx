@@ -1,4 +1,5 @@
-// import NavBar from './Pages/MainPage/NavBar'
+// import NavBar from '../components/NavBar'
+import NavBar2 from '../components/Navbar2'
 
 import DynamicSection from '../components/DynamicSection'
 import Footer from '../components/Footer'
@@ -47,6 +48,7 @@ export default function MainPage() {
 	return (
 		<div className="font-roboto flex flex-col items-center overflow-hidden">
 			{/* <NavBar /> */}
+			<NavBar2 />
 
 			{sections.map((section, index) => (
 				<DynamicSection
