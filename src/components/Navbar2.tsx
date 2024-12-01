@@ -1,9 +1,35 @@
 import AnimatedLink from './AnimatedLink'
 import { Fade as Hamburger } from 'hamburger-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function NavBar2() {
 	const [isOpen, setOpen] = useState(false)
+	const [isVisible, setVisible] = useState(true)
+	const [lastScrollPos, setLastScrollPos] = useState(0)
+	const [isScrolledFar, setScrolledFar] = useState(false)
+
+	useEffect(() => {
+		const handleScroll = () => {
+			const currentScrollPos = window.pageYOffset
+
+			setScrolledFar(currentScrollPos >= 1000)
+
+			if (isOpen) {
+				setOpen(false)
+			} else {
+				if (currentScrollPos > lastScrollPos) {
+					setVisible(false)
+				} else {
+					setVisible(true)
+				}
+			}
+
+			setLastScrollPos(currentScrollPos)
+		}
+
+		window.addEventListener('scroll', handleScroll)
+		return () => window.removeEventListener('scroll', handleScroll)
+	}, [isOpen, lastScrollPos])
 
 	const navlists = [
 		{ name: 'mission', link: '/' },
@@ -12,10 +38,18 @@ export default function NavBar2() {
 		{ name: 'updates', link: '/' },
 		{ name: 'shop', link: '/' },
 	]
+
 	return (
-		<div className="bg-transparent fixed text-white z-50 py-4 w-full">
-			<div className="relative ">
-				<div className="flex  container w-full  mx-auto xl:justify-start xl:px-10  justify-center">
+		<div
+			className={
+				`fixed text-white z-50 py-4 w-full transition-opacity duration-300 ${
+					isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
+				} ${
+					isScrolledFar ? 'bg-black transition-all duration-300' : 'bg-transparent'
+				}` /* Dynamically change the background */
+			}>
+			<div className="relative">
+				<div className="flex container w-full mx-auto xl:justify-start xl:px-10 justify-center">
 					<svg
 						version="1.1"
 						x="0px"
@@ -48,7 +82,7 @@ export default function NavBar2() {
 							<path d="M399,0.7c-80,4.6-117,38.8-125.3,46.9l-1.7,1.6h14.8C326.8,9.1,384.3,2,399,0.7L399,0.7z"></path>
 						</g>
 					</svg>
-					<nav className="hidden xl:flex uppercase font-semibold text-sm gap-x-5 items-end flex-wrap ">
+					<nav className="hidden xl:flex uppercase font-semibold text-sm gap-x-5 items-end flex-wrap">
 						<AnimatedLink href="">falcon heavy</AnimatedLink>
 						<AnimatedLink href="">dragon</AnimatedLink>
 						<AnimatedLink href="">starship</AnimatedLink>
@@ -59,7 +93,7 @@ export default function NavBar2() {
 						<AnimatedLink href="">starlink</AnimatedLink>
 					</nav>
 				</div>
-				<div className="flex items-center lg: absolute top-0 right-0 h-full  pr-3 xl:mt-2">
+				<div className="flex items-center lg: absolute top-0 right-0 h-full pr-3 xl:mt-2">
 					<AnimatedLink href="" className="hidden xl:block mt-1 uppercase font-semibold text-sm mr-3">
 						shop
 					</AnimatedLink>
@@ -75,7 +109,6 @@ export default function NavBar2() {
 					className={`fixed top-0 right-0 h-screen w-[350px] bg-black text-white transition-transform duration-300 ${
 						isOpen ? 'translate-x-0' : 'translate-x-full'
 					}`}>
-					{' '}
 					<div className="flex flex-col items-end space-y-4 mt-20 px-12 w-full uppercase text-sm font-medium leading-5">
 						{navlists.map((navlist, index) => (
 							<a href="#" className="w-full flex flex-col items-end hover:text-gray-400 duration-300" key={index}>
