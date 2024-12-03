@@ -1,18 +1,20 @@
 import { IoIosArrowDown } from 'react-icons/io'
 import AnimatedButton from '../components/AnimatedButton'
+import { Link } from 'react-router-dom'
 
 export interface DynamicSectionProps {
 	title: string
 	subtitle: string
 	mediaType: 'video' | 'image' | string
 	mediaSrc: string
+	btnSrc: string
 }
 
-const DynamicSection: React.FC<DynamicSectionProps> = ({ title, subtitle, mediaType, mediaSrc }) => {
+export default function DynamicSection({ title, subtitle, mediaType, mediaSrc, btnSrc }: DynamicSectionProps) {
 	return (
 		<div className="relative w-screen h-screen overflow-hidden">
 			{mediaType === 'video' ? (
-				<video className="absolute inset-0 w-full h-full object-cover max-w-full" loop muted /*autoPlay*/>
+				<video className="absolute inset-0 w-full h-full object-cover max-w-full" loop muted autoPlay>
 					<source src={mediaSrc} type="video/mp4" />
 					Your browser does not support the video tag.
 				</video>
@@ -25,7 +27,9 @@ const DynamicSection: React.FC<DynamicSectionProps> = ({ title, subtitle, mediaT
 				<h2 className="text-3xl sm:text-5xl font-bold uppercase animate-fade-up animate-delay-150 whitespace-pre-wrap leading-8">
 					{title}
 				</h2>
-				<AnimatedButton href="">rewatch</AnimatedButton>
+				<Link to={btnSrc}>
+					<AnimatedButton href="">rewatch</AnimatedButton>
+				</Link>
 			</div>
 
 			<IoIosArrowDown
@@ -35,5 +39,3 @@ const DynamicSection: React.FC<DynamicSectionProps> = ({ title, subtitle, mediaT
 		</div>
 	)
 }
-
-export default DynamicSection
