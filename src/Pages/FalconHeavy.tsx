@@ -3,6 +3,8 @@ import Footer from '../components/Footer'
 import SubSectionHeader from '../components/SubSiteComponents/SubSectionHeader'
 import SubSectionVideo from '../components/SubSiteComponents/SubSectionVideo'
 import SubSectionGif from '../components/SubSiteComponents/SubSectionGif'
+import SubSectionEngine from '../components/SubSiteComponents/SubSectionEngine'
+import SubSectionCarousel from '../components/SubSiteComponents/SubSectionCarousel'
 
 export default function FalconHeavy() {
 	return (
@@ -22,6 +24,8 @@ export default function FalconHeavy() {
 				title="falcon heavy first flight"
 			/>
 			<SubSectionGif />
+			<SubSectionEngine />
+			<SubSectionCarousel />
 			<Footer />
 		</div>
 	)
